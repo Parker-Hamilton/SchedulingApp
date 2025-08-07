@@ -1,0 +1,222 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\reporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\reporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\customerdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\customerdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\dashboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\dashboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\scheduleingapp\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\appointment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\appointmentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\appointmentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\scheduleingapp\\appointmentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\appointmentdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|c:\\users\\parkerhamilton\\source\\c# projects\\scheduleingapp\\scheduleingapp\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4882F3A1-C931-420D-8956-A108A5B34DCF}|ScheduleingApp\\ScheduleingApp.csproj|solutionrelative:scheduleingapp\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Login.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Login.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Login.cs",
+              "RelativeToolTip": "ScheduleingApp\\Login.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAAAFEAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T01:17:14.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\User.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\User.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\User.cs",
+              "RelativeToolTip": "ScheduleingApp\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T01:07:37.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Reporter.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Reporter.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Reporter.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Reporter.cs",
+              "RelativeToolTip": "ScheduleingApp\\Reporter.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAAD0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T01:05:40.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppointmentDetail.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\AppointmentDetail.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\AppointmentDetail.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\AppointmentDetail.cs",
+              "RelativeToolTip": "ScheduleingApp\\AppointmentDetail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T19:31:07.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Appointment.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Appointment.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Appointment.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Appointment.cs",
+              "RelativeToolTip": "ScheduleingApp\\Appointment.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAYwBsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T19:07:30.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CustomerDetail.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\CustomerDetail.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\CustomerDetail.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\CustomerDetail.cs",
+              "RelativeToolTip": "ScheduleingApp\\CustomerDetail.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAcwGUAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T18:55:08.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Dashboard.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Dashboard.Designer.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Dashboard.Designer.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Dashboard.Designer.cs",
+              "RelativeToolTip": "ScheduleingApp\\Dashboard.Designer.cs",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAAAKAAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T17:24:51.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Dashboard.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Dashboard.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Dashboard.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Dashboard.cs [Design]",
+              "RelativeToolTip": "ScheduleingApp\\Dashboard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T18:17:03.983Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Dashboard.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Dashboard.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Dashboard.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Dashboard.cs",
+              "RelativeToolTip": "ScheduleingApp\\Dashboard.cs",
+              "ViewState": "AgIAAAABAAAAAAAAAAAqwBkBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T20:25:32.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AppointmentDetail.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\AppointmentDetail.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\AppointmentDetail.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\AppointmentDetail.cs [Design]",
+              "RelativeToolTip": "ScheduleingApp\\AppointmentDetail.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T18:59:33.282Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Customer.cs",
+              "RelativeDocumentMoniker": "ScheduleingApp\\Customer.cs",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\Customer.cs",
+              "RelativeToolTip": "ScheduleingApp\\Customer.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAqwJgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T19:10:10.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\App.config",
+              "RelativeDocumentMoniker": "ScheduleingApp\\App.config",
+              "ToolTip": "C:\\Users\\ParkerHamilton\\source\\C# Projects\\ScheduleingApp\\ScheduleingApp\\App.config",
+              "RelativeToolTip": "ScheduleingApp\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-08-01T19:18:12.613Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

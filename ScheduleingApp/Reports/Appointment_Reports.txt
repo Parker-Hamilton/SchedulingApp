@@ -1,0 +1,38 @@
+Appointments by Month:
+  July:
+    asdf: 1
+  August:
+    fghjk: 1
+    test: 2
+    etst: 1
+
+Schedule by User:
+  test:
+    7/30/2025 - asdf
+    8/2/2025 - fghjk
+    8/1/2025 - test
+    8/1/2025 - test
+    8/1/2025 - etst
+
+Most Common Appointment Type:
+  test (2)
+
+Appointments by Month:
+  July:
+    asdf: 1
+  August:
+    fghjk: 1
+    test: 2
+    etst: 1
+
+Schedule by User:
+  test:
+    7/30/2025 - asdf
+    8/2/2025 - fghjk
+    8/1/2025 - test
+    8/1/2025 - test
+    8/1/2025 - etst
+
+Most Common Appointment Type:
+  test (2)
+
