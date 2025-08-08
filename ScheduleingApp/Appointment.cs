@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,17 +68,17 @@ namespace ScheduleingApp
                 Parameters = new List<StoredProcedureParameters>()
                 {
 
-                    new StoredProcedureParameters("@customerId", this.CustomerID, SqlDbType.Int),
-                    new StoredProcedureParameters("@userId", this.UserID, SqlDbType.Int),
-                    new StoredProcedureParameters("@title", this.Title?.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@description", this.Description?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@location", this.Location?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@contact", this.Contact?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@type", this.Type?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@url", this.URL?.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@start", this.Start, SqlDbType.DateTime),
-                    new StoredProcedureParameters("@end", this.End, SqlDbType.DateTime),
-                    new StoredProcedureParameters("@createdBy", Credentials.Instance.Username.Trim(), SqlDbType.VarChar),
+                    new StoredProcedureParameters("@customerId", this.CustomerID, MySqlDbType.Int32),
+                    new StoredProcedureParameters("@userId", this.UserID, MySqlDbType.Int32),
+                    new StoredProcedureParameters("@title", this.Title?.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@description", this.Description?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@location", this.Location?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@contact", this.Contact?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@type", this.Type?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@url", this.URL?.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@start", this.Start, MySqlDbType.DateTime),
+                    new StoredProcedureParameters("@end", this.End, MySqlDbType.DateTime),
+                    new StoredProcedureParameters("@createdBy", Credentials.Instance.Username.Trim(), MySqlDbType.VarChar),
 
                 };
             }
@@ -85,25 +86,25 @@ namespace ScheduleingApp
             {
                 Parameters = new List<StoredProcedureParameters>()
                 {
-                    new StoredProcedureParameters("@appointmentId", this.Id, SqlDbType.Int),
-                    new StoredProcedureParameters("@customerId", this.CustomerID, SqlDbType.Int),
-                    new StoredProcedureParameters("@userId", this.UserID, SqlDbType.Int),
-                    new StoredProcedureParameters("@title", this.Title?.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@description", this.Description?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@location", this.Location?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@contact", this.Contact?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@type", this.Type?.Trim(), SqlDbType.Text),
-                    new StoredProcedureParameters("@url", this.URL?.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@start", this.Start, SqlDbType.DateTime),
-                    new StoredProcedureParameters("@end", this.End, SqlDbType.DateTime),
-                    new StoredProcedureParameters("@lastUpdateBy", Credentials.Instance.Username.Trim(), SqlDbType.VarChar)
+                    new StoredProcedureParameters("@appointmentId", this.Id, MySqlDbType.Int32),
+                    new StoredProcedureParameters("@customerId", this.CustomerID, MySqlDbType.Int32),
+                    new StoredProcedureParameters("@userId", this.UserID, MySqlDbType.Int32),
+                    new StoredProcedureParameters("@title", this.Title?.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@description", this.Description?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@location", this.Location?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@contact", this.Contact?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@type", this.Type?.Trim(), MySqlDbType.Text),
+                    new StoredProcedureParameters("@url", this.URL?.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@start", this.Start, MySqlDbType.DateTime),
+                    new StoredProcedureParameters("@end", this.End, MySqlDbType.DateTime),
+                    new StoredProcedureParameters("@lastUpdateBy", Credentials.Instance.Username.Trim(), MySqlDbType.VarChar)
                 };
             }
             else if (type == "delete")
             {
                 Parameters = new List<StoredProcedureParameters>()
                 {
-                    new StoredProcedureParameters("@appointmentId", this.Id, SqlDbType.Int),
+                    new StoredProcedureParameters("@appointmentId", this.Id, MySqlDbType.Int32),
                 };
             }
         }
@@ -117,9 +118,9 @@ namespace ScheduleingApp
                 {
                     string storedProcedureName = ConfigurationManager.AppSettings["SP_AddAppointment"];
 
-                    SqlParameter returnValue = new SqlParameter();
+                    MySqlParameter returnValue = new MySqlParameter();
                     returnValue.Direction = ParameterDirection.ReturnValue;
-                    returnValue.SqlDbType = SqlDbType.Int;
+                    returnValue.MySqlDbType = MySqlDbType.Int32;
                     this.Id = connection.ExecuteStoredProc(storedProcedureName, this.Parameters, returnValue);
                 }
                 return true;

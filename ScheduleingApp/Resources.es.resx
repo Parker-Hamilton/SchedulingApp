@@ -123,11 +123,20 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="GetAllUsers" xml:space="preserve">
+    <value />
+  </data>
   <data name="loginErrorMessage" xml:space="preserve">
     <value>El nombre de usuario y la contraseña no coinciden.</value>
   </data>
   <data name="passwordLabel" xml:space="preserve">
     <value>Contraseña</value>
+  </data>
+  <data name="GetAllAppointments" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GetAllCustomers" xml:space="preserve">
+    <value />
   </data>
   <data name="userLocationlabel" xml:space="preserve">
     <value>Ubicación del usuario:</value>

@@ -123,11 +123,20 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="GetAllUsers" xml:space="preserve">
+    <value>Select * FROM user</value>
+  </data>
   <data name="loginErrorMessage" xml:space="preserve">
     <value>The username and password do not match.</value>
   </data>
   <data name="passwordLabel" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="GetAllAppointments" xml:space="preserve">
+    <value>SELECT * FROM appointment</value>
+  </data>
+  <data name="GetAllCustomers" xml:space="preserve">
+    <value>SELECT * FROM customer</value>
   </data>
   <data name="userLocationlabel" xml:space="preserve">
     <value>User Location:</value>

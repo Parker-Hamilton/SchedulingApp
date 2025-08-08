@@ -13,8 +13,14 @@
     ],
     "additionalProbingPaths": [
       "C:\\Users\\Parker Hamilton\\.dotnet\\store\\|arch|\\|tfm|",
+<<<<<<< Updated upstream
       "C:\\Users\\ParkerHamilton\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+=======
+      "C:\\Users\\Parker Hamilton\\.nuget\\packages",
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+      "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
+>>>>>>> Stashed changes
     ],
     "configProperties": {
       "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": true,

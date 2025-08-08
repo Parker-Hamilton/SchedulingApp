@@ -36,9 +36,9 @@ namespace ScheduleingApp
                 reporter = new Reporter();
                 using (var connection = new DatabaseHelper())
                 {
-                    customerData = connection.ExecuteStoredProc(ConfigurationManager.AppSettings["SP_GetAllCustomers"]);
-                    appointmentData = connection.ExecuteStoredProc(ConfigurationManager.AppSettings["SP_GetAllAppointments"]);
-                    userData = connection.ExecuteStoredProc(ConfigurationManager.AppSettings["SP_GetAllUsers"]);
+                    customerData = connection.MySqlCommand_GET(MySqlCommands.GetAllCustomers);
+                    appointmentData = connection.MySqlCommand_GET(MySqlCommands.GetAllAppointments);
+                    userData = connection.MySqlCommand_GET(MySqlCommands.GetAllUsers);
                 }
                 foreach (DataRow row in userData.Rows)
                 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace ScheduleingApp
 {
@@ -11,12 +11,12 @@ namespace ScheduleingApp
     {
         public string Name { get; set; }
         public object Value { get; set; }
-        public SqlDbType SqlDbType { get; set; }
-        public StoredProcedureParameters(string name, object value, SqlDbType sqlDbType) 
+        public MySqlDbType MySqlDbType { get; set; }
+        public StoredProcedureParameters(string name, object value, MySqlDbType mySqlDbType) 
         {
             this.Name = name;
             this.Value = value;
-            this.SqlDbType = sqlDbType;
+            this.MySqlDbType = mySqlDbType;
         }
     }
 }

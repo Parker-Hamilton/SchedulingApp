@@ -22,7 +22,6 @@ namespace ScheduleingApp
         private Credentials credentials;
         string currentRegion = RegionInfo.CurrentRegion.DisplayName;
         string currentLangCode = CultureInfo.CurrentCulture.ThreeLetterWindowsLanguageName;
-        //Establish db connection before allowing user into the application
         public Login()
         {
             InitializeComponent();

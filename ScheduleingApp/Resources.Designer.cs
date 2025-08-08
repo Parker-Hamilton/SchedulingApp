@@ -79,7 +79,34 @@ namespace ScheduleingApp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Username and Password do not match..
+        ///   Looks up a localized string similar to SELECT * FROM appointment.
+        /// </summary>
+        public static string GetAllAppointments {
+            get {
+                return ResourceManager.GetString("GetAllAppointments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM customer.
+        /// </summary>
+        public static string GetAllCustomers {
+            get {
+                return ResourceManager.GetString("GetAllCustomers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select * FROM user.
+        /// </summary>
+        public static string GetAllUsers {
+            get {
+                return ResourceManager.GetString("GetAllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The username and password do not match..
         /// </summary>
         public static string loginErrorMessage {
             get {

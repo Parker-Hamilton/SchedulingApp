@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -61,52 +62,48 @@ namespace ScheduleingApp
             {
                 Parameters = new List<StoredProcedureParameters>()
                 {
-                    new StoredProcedureParameters("@customerName", this.Name.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@address", this.Address.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@address2", address2, SqlDbType.VarChar),
-                    new StoredProcedureParameters("@postalCode", this.PostalCode.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@phone", this.Phone.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@city", this.City.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@country", this.Country.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@createdBy", Credentials.Instance.Username.Trim(), SqlDbType.VarChar)
+                    new StoredProcedureParameters("@customerName", this.Name.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@address", this.Address.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@address2", address2, MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@postalCode", this.PostalCode.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@phone", this.Phone.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@city", this.City.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@country", this.Country.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@createdBy", Credentials.Instance.Username.Trim(), MySqlDbType.VarChar)
                 };
             }
             else if (type == "modify")
             {
                 Parameters = new List<StoredProcedureParameters>()
                 {
-                    new StoredProcedureParameters("@customerId", this.CustomerId, SqlDbType.Int),
-                    new StoredProcedureParameters("@customerName", this.Name.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@address", this.Address.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@address2", address2, SqlDbType.VarChar),
-                    new StoredProcedureParameters("@postalCode", this.PostalCode.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@phone", this.Phone.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@city", this.City.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@country", this.Country.Trim(), SqlDbType.VarChar),
-                    new StoredProcedureParameters("@updatedBy", Credentials.Instance.Username.Trim(), SqlDbType.VarChar)
+                    new StoredProcedureParameters("@customerId", this.CustomerId, MySqlDbType.Int32),
+                    new StoredProcedureParameters("@customerName", this.Name.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@address", this.Address.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@address2", address2, MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@postalCode", this.PostalCode.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@phone", this.Phone.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@city", this.City.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@country", this.Country.Trim(), MySqlDbType.VarChar),
+                    new StoredProcedureParameters("@updatedBy", Credentials.Instance.Username.Trim(), MySqlDbType.VarChar)
                 };
             }
             else if (type == "delete")
             {
                 Parameters = new List<StoredProcedureParameters>()
                 {
-                    new StoredProcedureParameters("@customerId", this.CustomerId, SqlDbType.Int),
+                    new StoredProcedureParameters("@customerId", this.CustomerId, MySqlDbType.Int32),
                 };
             }
         }
         public bool AddCustomerInDatabase()
         {
-            this.InitParameters("add");
+            string sqlCommand = MySqlCommands.CustomerAction(this, "add");
+            string returnCommand = MySqlCommands.GetAddedCustomerID;
             try
             {
                 using (var connection = new DatabaseHelper())
                 {
-                    string storedProcedureName = ConfigurationManager.AppSettings["SP_AddCustomer"];
-
-                    SqlParameter returnValue = new SqlParameter();
-                    returnValue.Direction = ParameterDirection.ReturnValue;
-                    returnValue.SqlDbType = SqlDbType.Int;
-                    this.CustomerId = connection.ExecuteStoredProc(storedProcedureName, this.Parameters, returnValue);
+                    this.CustomerId = connection.ExecuteMySqlCommand_PUT(sqlCommand, returnCommand);
                 }
                 return true;
             }
@@ -118,13 +115,12 @@ namespace ScheduleingApp
         }
         public bool DeleteCustomerInDatabase()
         {
-            this.InitParameters("delete");
+            string sqlCommand = MySqlCommands.DeleteCustomer(this);
             try
             {
                 using (var connection = new DatabaseHelper())
                 {
-                    string storedProcedureName = ConfigurationManager.AppSettings["SP_DeleteCustomer"];
-                    connection.ExecuteStoredProc(storedProcedureName, this.Parameters);
+                    connection.ExecuteMySqlCommand_VOID(sqlCommand);
                 }
                 return true;
             }
@@ -136,13 +132,12 @@ namespace ScheduleingApp
         }
         public bool ModifyCustomerInDatabase()
         {
-            this.InitParameters("modify");
+            string sqlCommand = MySqlCommands.CustomerAction(this, "modify");
             try
             {
                 using (var connection = new DatabaseHelper())
                 {
-                    string storedProcedureName = ConfigurationManager.AppSettings["SP_ModifyCustomer"];
-                    connection.ExecuteStoredProc(storedProcedureName, this.Parameters);
+                    connection.ExecuteMySqlCommand_VOID(sqlCommand);
                 }
                 return true;
             }
