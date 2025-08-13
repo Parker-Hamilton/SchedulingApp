@@ -2,6 +2,7 @@ using ScheduleingApp;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -45,26 +46,41 @@ namespace ScheduleingApp
         }
         private bool LoginAttempt(string username, string password)
         {
-            try
+            if (username == "test" && password == "test")
             {
-                credentials.Set(username, password);
-                using (var connection = new DatabaseHelper())
+                try
                 {
-                    this.LogLoginAttempt(this.credentials.Username, this.credentials.Password, "success");
-                    return true;
+                    credentials.Set(username, password);
+                    using (var connection = new DatabaseHelper())
+                    {
+                        this.LogLoginAttempt(this.credentials.Username, this.credentials.Password, "success");
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DialogResult result = MessageBox.Show(
+                        Resources.loginErrorMessage,
+                        Resources.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    Console.WriteLine($"Error: {ex.Message}");
+                    this.LogLoginAttempt(credentials.Username, credentials.Password, "failure", ex);
+                    credentials.Clear();
+                    return false;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                DialogResult result = MessageBox.Show(
-                    Resources.loginErrorMessage,
-                    Resources.Error,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                Console.WriteLine($"Error: {ex.Message}");
-                this.LogLoginAttempt(credentials.Username, credentials.Password, "failure", ex);
-                credentials.Clear();
-                return false;
+                    DialogResult result = MessageBox.Show(
+                        Resources.loginErrorMessage,
+                        Resources.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    Console.WriteLine($"Error: {Resources.loginErrorMessage}");
+                    this.LogLoginAttempt(credentials.Username, credentials.Password, "failure");
+                    credentials.Clear();
+                    return false;
             }
         }
         private void LogLoginAttempt(string username, string password, string status, Exception ex = null)
@@ -80,11 +96,11 @@ namespace ScheduleingApp
                     if (ex == null)
                     {
                         
-                        fileWriter.WriteLine($"{timestamp} - username: {username} - credentials status: {status}");
+                        fileWriter.WriteLine($"{timestamp} - username: {username} - status: {status}");
                     }
                     else
                     {
-                        fileWriter.WriteLine($"{timestamp} - username: {username} - credentials status: {status}");
+                        fileWriter.WriteLine($"{timestamp} - username: {username} - status: {status}");
                     }
                 }
             }

@@ -27,23 +27,26 @@ namespace ScheduleingApp
         public string CustomerName => Customer?.Name;
         public User User { get; set; }
         public string UserName => User?.Username;
-        public string StartTime => Start.ToString("h:mm tt");
-        public string EndTime => End.ToString("h:mm tt");
+        public string StartTimeLocal { get; set; }
+        public string EndTimeLocal { get; set; }
+
         public List<StoredProcedureParameters> Parameters;
         public void SetDetails(int customerId, int userId, string title, string description, string location, string contact, string type, string url, DateTime start, DateTime end, Customer customer, User user)
         {
             this.CustomerID = customerId;
             this.UserID = userId;
-            this.Title = title;
-            this.Description = description;
-            this.Location = location;
-            this.Contact = contact;
-            this.Type = type;
-            this.URL = url;
-            this.Start = start;
-            this.End = end;
+            this.Title = title.Trim();
+            this.Description = description.Trim();
+            this.Location = location.Trim();
+            this.Contact = contact.Trim();
+            this.Type = type.Trim();
+            this.URL = url.Trim();
+            this.Start = TimeZoneInfo.ConvertTimeToUtc(start, TimeZoneInfo.Local);
+            this.End = TimeZoneInfo.ConvertTimeToUtc(end, TimeZoneInfo.Local);
             this.Customer = customer;
             this.User = user;
+            this.StartTimeLocal = TimeZoneInfo.ConvertTime(this.Start, TimeZoneInfo.Utc, TimeZoneInfo.Local).ToString("MMM dd hh:mm tt");
+            this.EndTimeLocal = TimeZoneInfo.ConvertTime(this.End, TimeZoneInfo.Utc, TimeZoneInfo.Local).ToString("MMM dd hh:mm tt");
         }
         public void SetDetailsFromDatabase(int id, int customerId, int userId, string title, string description, string location, string contact, string type, string url, DateTime start, DateTime end, Customer customer, User user)
         {
@@ -60,68 +63,18 @@ namespace ScheduleingApp
             this.End = end;
             this.Customer = customer;
             this.User = user;
+            this.StartTimeLocal = TimeZoneInfo.ConvertTime(this.Start, TimeZoneInfo.Utc, TimeZoneInfo.Local).ToString("MMM dd hh:mm tt");
+            this.EndTimeLocal = TimeZoneInfo.ConvertTime(this.End, TimeZoneInfo.Utc, TimeZoneInfo.Local).ToString("MMM dd hh:mm tt");
         }
-        private void InitParameters(string type)
-        {
-            if (type == "add")
-            {
-                Parameters = new List<StoredProcedureParameters>()
-                {
-
-                    new StoredProcedureParameters("@customerId", this.CustomerID, MySqlDbType.Int32),
-                    new StoredProcedureParameters("@userId", this.UserID, MySqlDbType.Int32),
-                    new StoredProcedureParameters("@title", this.Title?.Trim(), MySqlDbType.VarChar),
-                    new StoredProcedureParameters("@description", this.Description?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@location", this.Location?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@contact", this.Contact?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@type", this.Type?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@url", this.URL?.Trim(), MySqlDbType.VarChar),
-                    new StoredProcedureParameters("@start", this.Start, MySqlDbType.DateTime),
-                    new StoredProcedureParameters("@end", this.End, MySqlDbType.DateTime),
-                    new StoredProcedureParameters("@createdBy", Credentials.Instance.Username.Trim(), MySqlDbType.VarChar),
-
-                };
-            }
-            else if (type == "modify")
-            {
-                Parameters = new List<StoredProcedureParameters>()
-                {
-                    new StoredProcedureParameters("@appointmentId", this.Id, MySqlDbType.Int32),
-                    new StoredProcedureParameters("@customerId", this.CustomerID, MySqlDbType.Int32),
-                    new StoredProcedureParameters("@userId", this.UserID, MySqlDbType.Int32),
-                    new StoredProcedureParameters("@title", this.Title?.Trim(), MySqlDbType.VarChar),
-                    new StoredProcedureParameters("@description", this.Description?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@location", this.Location?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@contact", this.Contact?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@type", this.Type?.Trim(), MySqlDbType.Text),
-                    new StoredProcedureParameters("@url", this.URL?.Trim(), MySqlDbType.VarChar),
-                    new StoredProcedureParameters("@start", this.Start, MySqlDbType.DateTime),
-                    new StoredProcedureParameters("@end", this.End, MySqlDbType.DateTime),
-                    new StoredProcedureParameters("@lastUpdateBy", Credentials.Instance.Username.Trim(), MySqlDbType.VarChar)
-                };
-            }
-            else if (type == "delete")
-            {
-                Parameters = new List<StoredProcedureParameters>()
-                {
-                    new StoredProcedureParameters("@appointmentId", this.Id, MySqlDbType.Int32),
-                };
-            }
-        }
-
         public bool AddAppointmentInDatabase()
         {
-            this.InitParameters("add");
+            string sqlCommand = MySqlCommands.AddAppointment(this);
+            string returnCommand = MySqlCommands.GetAddedAppointmentID; 
             try
             {
                 using (var connection = new DatabaseHelper())
                 {
-                    string storedProcedureName = ConfigurationManager.AppSettings["SP_AddAppointment"];
-
-                    MySqlParameter returnValue = new MySqlParameter();
-                    returnValue.Direction = ParameterDirection.ReturnValue;
-                    returnValue.MySqlDbType = MySqlDbType.Int32;
-                    this.Id = connection.ExecuteStoredProc(storedProcedureName, this.Parameters, returnValue);
+                    this.Id = connection.ExecuteMySqlCommand_PUT(sqlCommand, returnCommand);
                 }
                 return true;
             }
@@ -133,13 +86,12 @@ namespace ScheduleingApp
         }
         public bool ModifyAppointmentInDatabase()
         {
-            this.InitParameters("modify");
+            string sqlCommand = MySqlCommands.UpdateAppointment(this);
             try
             {
                 using (var connection = new DatabaseHelper())
                 {
-                    string storedProcedureName = ConfigurationManager.AppSettings["SP_UpdateAppointment"];
-                    connection.ExecuteStoredProc(storedProcedureName, this.Parameters);
+                    connection.ExecuteMySqlCommand_VOID(sqlCommand);
                 }
                 return true;
             }
@@ -151,13 +103,12 @@ namespace ScheduleingApp
         }
         public bool DeleteAppointmentInDatabase()
         {
-            this.InitParameters("delete");
+            string sqlCommand = MySqlCommands.DeleteAppointment(this);
             try
             {
                 using (var connection = new DatabaseHelper())
                 {
-                    string storedProcedureName = ConfigurationManager.AppSettings["SP_DeleteAppointment"];
-                    connection.ExecuteStoredProc(storedProcedureName, this.Parameters);
+                    connection.ExecuteMySqlCommand_VOID(sqlCommand);
                 }
                 return true;
             }

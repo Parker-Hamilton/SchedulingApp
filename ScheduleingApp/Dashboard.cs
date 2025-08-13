@@ -87,7 +87,7 @@ namespace ScheduleingApp
                         row["url"].ToString(),
                         Convert.ToDateTime(row["start"]),
                         Convert.ToDateTime(row["end"]),
-                        customers.FirstOrDefault(c => c.CustomerId == Convert.ToInt32(Convert.ToInt32(row["appointmentId"]))),
+                        customers.FirstOrDefault(c => c.CustomerId == Convert.ToInt32(Convert.ToInt32(row["customerId"]))),
                         users.FirstOrDefault(u => u.Username == Credentials.Instance.Username)
                     );
                     appointments.Add(appointment);
@@ -201,6 +201,8 @@ namespace ScheduleingApp
             appointmentDataGrid.Columns["Customer"].Visible = false;
             appointmentDataGrid.Columns["User"].Visible = false;
 
+            appointmentDataGrid.Columns["StartTimeLocal"].HeaderText = "Start";
+            appointmentDataGrid.Columns["EndTimeLocal"].HeaderText = "End";
 
         }
         private void SetMeetingAlert()

@@ -8,8 +8,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ScheduleingApp
 {
@@ -34,13 +36,14 @@ namespace ScheduleingApp
         }
         private bool EnableSave()
         {
-            if (firstNameInput.Text == string.Empty
-                || lastNameInput.Text == string.Empty
-                || addressInput.Text == string.Empty
-                || cityInput.Text == string.Empty
-                || postalCodeInput.Text == string.Empty
-                || phoneInput.Text == string.Empty
-                || countryInput.Text == string.Empty)
+            if (string.IsNullOrWhiteSpace(firstNameInput.Text)
+                || string.IsNullOrWhiteSpace(lastNameInput.Text)
+                || string.IsNullOrWhiteSpace(addressInput.Text)
+                || string.IsNullOrWhiteSpace(cityInput.Text)
+                || string.IsNullOrWhiteSpace(postalCodeInput.Text)
+                || string.IsNullOrWhiteSpace(phoneInput.Text)
+                || string.IsNullOrWhiteSpace(countryInput.Text)
+                || IsValidPhoneNumber(phoneInput.Text) == false)
             {
                 return false;
             }
@@ -123,6 +126,7 @@ namespace ScheduleingApp
         private void firstNameInput_TextChanged(object sender, EventArgs e)
         {
             btnSave.Enabled = this.EnableSave();
+
         }
         private void lastNameInput_TextChanged(object sender, EventArgs e)
         {
@@ -156,5 +160,17 @@ namespace ScheduleingApp
                 e.Handled = true;
             }
         }
+        public static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            string trimmed = phoneNumber.Trim();
+
+            if (string.IsNullOrWhiteSpace(trimmed))
+                return false;
+
+            string regex = @"^\d{3}-\d{3}-\d{4}$";
+            return Regex.IsMatch(trimmed, regex);
+        }
+
+
     }
 }

@@ -20,18 +20,18 @@ SET @addressId = NULL;
 SET @customerId = NULL;
 
 INSERT INTO country (country, createdBy, createDate, lastUpdate, lastUpdateBy)
-SELECT '{customer.Country}', '{Credentials.Instance.Username}', NOW(), NOW(), '{Credentials.Instance.Username}'
+SELECT '{customer.Country.Trim()}', '{Credentials.Instance.Username}', NOW(), NOW(), '{Credentials.Instance.Username}'
 FROM DUAL
 WHERE NOT EXISTS (
-    SELECT 1 FROM country WHERE country = '{customer.Country}'
+    SELECT 1 FROM country WHERE country = '{customer.Country.Trim()}'
 );
 
 SELECT countryId INTO @countryId
 FROM country
-WHERE country = '{customer.Country}';
+WHERE country = '{customer.Country.Trim()}';
 
 INSERT INTO city (city, countryId, createDate, createdBy, lastUpdate, lastUpdateBy)
-SELECT '{customer.City}', @countryId, NOW(), '{Credentials.Instance.Username}', NOW(), '{Credentials.Instance.Username}'
+SELECT '{customer.City.Trim()}', @countryId, NOW(), '{Credentials.Instance.Username}', NOW(), '{Credentials.Instance.Username}'
 FROM DUAL
 WHERE NOT EXISTS (
     SELECT 1 FROM city WHERE city = '{customer.City}' AND countryId = @countryId
@@ -39,40 +39,40 @@ WHERE NOT EXISTS (
 
 SELECT cityId INTO @cityId
 FROM city
-WHERE city = '{customer.City}' AND countryId = @countryId;
+WHERE city = '{customer.City.Trim()}' AND countryId = @countryId;
 
 INSERT INTO address (
     address, address2, cityId, postalCode, phone,
     createDate, createdBy, lastUpdate, lastUpdateBy
 )
-SELECT '{customer.Address}', '{customer.Address2}', @cityId, '{customer.PostalCode}', '{customer.Phone}',
+SELECT '{customer.Address.Trim()}', '{customer.Address2.Trim()}', @cityId, '{customer.PostalCode.Trim()}', '{customer.Phone.Trim()}',
        NOW(), '{Credentials.Instance.Username}', NOW(), '{Credentials.Instance.Username}'
 FROM DUAL
 WHERE NOT EXISTS (
     SELECT 1 FROM address
-    WHERE address = '{customer.Address}'
-      AND (address2 = '{customer.Address2}' OR (address2 IS NULL AND '{customer.Address2}' IS NULL))
-      AND postalCode = '{customer.PostalCode}'
-      AND phone = '{customer.Phone}'
+    WHERE address = '{customer.Address.Trim()}'
+      AND (address2 = '{customer.Address2.Trim()}' OR (address2 IS NULL AND '{customer.Address2.Trim()}' IS NULL))
+      AND postalCode = '{customer.PostalCode.Trim()}'
+      AND phone = '{customer.Phone.Trim()}'
       AND cityId = @cityId
 );
 
 SELECT addressId INTO @addressId
 FROM address
-WHERE address = '{customer.Address}'
-  AND (address2 = '{customer.Address2}' OR (address2 IS NULL AND '{customer.Address2}' IS NULL))
-  AND postalCode = '{customer.PostalCode}'
-  AND phone = '{customer.Phone}'
+WHERE address = '{customer.Address.Trim()}'
+  AND (address2 = '{customer.Address2.Trim()}' OR (address2 IS NULL AND '{customer.Address2.Trim()}' IS NULL))
+  AND postalCode = '{customer.PostalCode.Trim()}'
+  AND phone = '{customer.Phone.Trim()}'
   AND cityId = @cityId;";
 
             string addCustomer = $@"
 INSERT INTO customer (
     customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy
 )
-SELECT '{customer.Name}', @addressId, 1, NOW(), '{Credentials.Instance.Username}', NOW(), '{Credentials.Instance.Username}'
+SELECT '{customer.Name.Trim()}', @addressId, 1, NOW(), '{Credentials.Instance.Username}', NOW(), '{Credentials.Instance.Username}'
 FROM DUAL
 WHERE NOT EXISTS (
-    SELECT 1 FROM customer WHERE customerName = '{customer.Name}' AND addressId = @addressId
+    SELECT 1 FROM customer WHERE customerName = '{customer.Name.Trim()}' AND addressId = @addressId
 );";
 
             string modifyCustomer = $@"
@@ -83,7 +83,7 @@ LIMIT 1;
 
 UPDATE customer
     SET
-        customerName = '{customer.Name}',
+        customerName = '{customer.Name.Trim()}',
         addressId = @addressId,
         lastUpdate = NOW(),
         lastUpdateBy = '{Credentials.Instance.Username}'
@@ -109,31 +109,28 @@ FROM customer
 ORDER BY customerId DESC
 LIMIT 1;";
 
-        public static string AddAppointment => @"
-            INSERT INTO appointment (
+        public static string GetAddedAppointmentID => @"
+SELECT appointmentId
+FROM appointment
+ORDER BY appointmentId DESC
+LIMIT 1;";
+
+        public static string AddAppointment(Appointment appointment) { 
+            return
+            $@"INSERT INTO appointment (
                 customerId, userId, title, description, location, contact, type, url,
                 start, end, createDate, createdBy, lastUpdate, lastUpdateBy
             )
             VALUES (
-                @customerId, @userId, @title, @description, @location, @contact, @type, @url,
-                @start, @end, NOW(), @createdBy, NOW(), @createdBy
+                '{appointment.CustomerID}', '{appointment.UserID}', '{appointment.Title.Trim()}', '{appointment.Description.Trim()}', '{appointment.Location.Trim()}', '{appointment.Contact.Trim()}', '{appointment.Type.Trim()}', '{appointment.URL.Trim()}',
+                '{appointment.Start.ToString("yyyy-MM-dd HH:mm:ss")}', '{appointment.End.ToString("yyyy-MM-dd HH:mm:ss")}', NOW(), '{Credentials.Instance.Username}', NOW(), '{Credentials.Instance.Username}'
             );
+        "; }
 
-            SELECT LAST_INSERT_ID();
-        ";
-
-        public static string UpdateCustomer => @"
-            UPDATE customer
-            SET customerName = @customerName,
-                addressId = @addressId,
-                lastUpdate = NOW(),
-                lastUpdateBy = @updatedBy
-            WHERE customerId = @customerId;
-        ";
-
-        public static string DeleteAppointment => @"
-            DELETE FROM appointment WHERE appointmentId = @appointmentId;
-        ";
+        public static string DeleteAppointment(Appointment appointment) 
+        { return $@"
+            DELETE FROM appointment WHERE appointmentId = {appointment.Id};"; 
+        }
 
         public static string GetAllAppointments => @"
             SELECT a.appointmentId, a.title, a.description, a.location, a.contact, a.type, a.url,
@@ -165,21 +162,22 @@ LIMIT 1;";
         ";
         }
 
-        public static string UpdateAppointment => @"
-            UPDATE appointment
-            SET customerId = @customerId,
-                userId = @userId,
-                title = @title,
-                description = @description,
-                location = @location,
-                contact = @contact,
-                type = @type,
-                url = @url,
-                start = @start,
-                end = @end,
+        public static string UpdateAppointment(Appointment appointment) { 
+            return
+            $@"UPDATE appointment
+            SET customerId = '{appointment.CustomerID}',
+                userId = '{appointment.UserID}',
+                title = '{appointment.Title.Trim()}',
+                description = '{appointment.Description.Trim()}',
+                location = '{appointment.Location.Trim()}',
+                contact = '{appointment.Contact.Trim()}',
+                type = '{appointment.Type.Trim()}',
+                url = '{appointment.URL.Trim()}',
+                start = '{appointment.Start.ToString("yyyy-MM-dd HH:mm:ss")}',
+                end = '{appointment.End.ToString("yyyy-MM-dd HH:mm:ss")}',
                 lastUpdate = NOW(),
-                lastUpdateBy = @lastUpdateBy
-            WHERE appointmentId = @appointmentId;
-        ";
+                lastUpdateBy = '{Credentials.Instance.Username}'
+            WHERE appointmentId = '{appointment.Id}';
+        "; }
     }
 }

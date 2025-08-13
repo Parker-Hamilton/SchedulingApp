@@ -25,12 +25,21 @@ namespace ScheduleingApp
                     g => g.ToList()
                 );
 
-        public (string Type, int Count) MostCommonAppointment(List<Appointment> appointments) =>
-            appointments
+        public List<Appointment> MostCommonAppointments(List<Appointment> appointments)
+        {
+            var types = appointments
                 .GroupBy(a => a.Type)
-                .OrderByDescending(g => g.Count())
-                .Select(g => (g.Key, g.Count()))
-                .FirstOrDefault();
+                .Select(g => new { Type = g.Key, Count = g.Count() })
+                .ToList();
+            int maxCount = types.Max(g => g.Count);
+            var mostCommonTypes = types
+                .Where(g => g.Count == maxCount)
+                .Select(g => g.Type)
+                .ToHashSet();
+            return appointments
+                .Where(a => mostCommonTypes.Contains(a.Type))
+                .ToList();
+        }
 
         public string GenerateReportText(List<Appointment> appointments)
         {
@@ -51,12 +60,12 @@ namespace ScheduleingApp
             {
                 report.AppendLine($"  {user.Key}:");
                 foreach (var appt in user.Value)
-                    report.AppendLine($"    {appt.Start.ToShortDateString()} - {appt.Type}");
+                    report.AppendLine($"    {appt.Start.ToString("MMM dd hh:mm tt")} - {appt.Type}");
             }
 
-            var mostCommonAppointment = MostCommonAppointment(appointments);
+            var mostCommonAppointment = MostCommonAppointments(appointments);
             report.AppendLine("\nMost Common Appointment Type:");
-            report.AppendLine($"  {mostCommonAppointment.Type} ({mostCommonAppointment.Count})");
+            report.AppendLine($"  {mostCommonAppointment} ({mostCommonAppointment.Count})");
 
             return report.ToString();
         }

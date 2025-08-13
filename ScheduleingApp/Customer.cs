@@ -29,12 +29,12 @@ namespace ScheduleingApp
         public void SetDetails(string firstName, string lastName, string address, string address2, string city, string postalCode, string country, string phone)
         {
             this.Name = $"{firstName.Trim()} {lastName.Trim()}";
-            this.Address = address;
-            this.Address2 = address2;
-            this.City = city;
-            this.PostalCode = postalCode;
-            this.Country = country;
-            this.Phone = phone;
+            this.Address = address.Trim();
+            this.Address2 = address2.Trim();
+            this.City = city.Trim();
+            this.PostalCode = postalCode.Trim();
+            this.Country = country.Trim();
+            this.Phone = phone.Trim();
         }
         public void SetDetailsFromDatabase(int id, string customerName, string address, string address2, string city, string postalCode, string country, string phone)
         {

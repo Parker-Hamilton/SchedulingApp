@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ScheduleingApp
 {
@@ -76,8 +77,8 @@ namespace ScheduleingApp
             titleInput.Text = this.appointment.Title;
             descInput.Text = this.appointment.Description;
             customerComboBox.SelectedValue = this.appointment.CustomerID;
-            startTimePicker.Value = this.appointment.Start;
-            endTimePicker.Value = this.appointment.End;
+            startTimePicker.Value = TimeZoneInfo.ConvertTime(this.appointment.Start, TimeZoneInfo.Utc, TimeZoneInfo.Local);
+            endTimePicker.Value = TimeZoneInfo.ConvertTime(this.appointment.End, TimeZoneInfo.Utc, TimeZoneInfo.Local);
             urlInput.Text = this.appointment.URL;
             typeInput.Text = this.appointment.Type;
             locationInput.Text = this.appointment.Location;
@@ -95,6 +96,10 @@ namespace ScheduleingApp
                 || locationInput.Text == string.Empty
                 || contactInput.Text == string.Empty)
                 || (startTimePicker.Value > endTimePicker.Value))
+            {
+                return false;
+            }
+            else if (addAppointmentFalseAlert.Visible == true)
             {
                 return false;
             }
@@ -137,7 +142,6 @@ namespace ScheduleingApp
             addAppointmentFalseAlert.Visible = false;
             Control control = sender as Control;
             string name = control.Name;
-            ValidateTimeInput(name);
         }
 
         private void endTimePicker_ValueChanged(object sender, EventArgs e)
@@ -145,53 +149,44 @@ namespace ScheduleingApp
             addAppointmentFalseAlert.Visible = false;
             Control control = sender as Control;
             string name = control.Name;
-            ValidateTimeInput(name);
         }
-        private void ValidateTimeInput(string controlName)
+        private bool ValidateTimeInput()
         {
-            DateTimePicker timePicker;
-            Label alertLabel;
-            if (controlName == endTimePicker.Name)
-            {
-                startTimeAlert.Visible = false;
-                timePicker = endTimePicker;
-                alertLabel = endTimeAlert;
-            }
-            else if (controlName == startTimePicker.Name)
-            {
-                endTimeAlert.Visible = false;
-                timePicker = startTimePicker;
-                alertLabel = startTimeAlert;
-            }
-            else
-            {
-                return;
-            }
             TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            DateTime selectedTime = timePicker.Value;
             DateTime startTime = startTimePicker.Value;
             DateTime endTime = endTimePicker.Value;
-            DateTime estTime = TimeZoneInfo.ConvertTime(selectedTime, est);
+            DateTime estStartTime = TimeZoneInfo.ConvertTime(startTime, est);
+            DateTime estEndTime = TimeZoneInfo.ConvertTime(endTime, est);
 
-            DateTime minTime = estTime.Date.AddHours(9); // 9:00 AM EST
-            DateTime maxTime = estTime.Date.AddHours(17); // 5:00 PM EST
+            DateTime minTime = estStartTime.Date.AddHours(9); // 9:00 AM EST
+            DateTime maxTime = estEndTime.Date.AddHours(17); // 5:00 PM EST
 
-            if (estTime < minTime || estTime > maxTime)
+            if (estStartTime < minTime || estStartTime > maxTime)
             {
-                alertLabel.Visible = true;
-                alertLabel.Text = $"Please select a time between 9:00 AM EST and 5:00 PM EST\n" +
+                addAppointmentFalseAlert.Visible = true;
+                addAppointmentFalseAlert.Text = $"Please select a time between 9:00 AM EST and 5:00 PM EST\n" +
                     $"Time is displayed in your local time zone ({TimeZoneInfo.Local.StandardName})";
+                return false;
             }
-            else if (startTime > endTime)
+            else if (estEndTime < minTime || estEndTime > maxTime)
             {
-                alertLabel.Visible = true;
-                alertLabel.Text = $"Please select a start time prior to your end time";
+                addAppointmentFalseAlert.Visible = true;
+                addAppointmentFalseAlert.Text = $"Please select a time between 9:00 AM EST and 5:00 PM EST\n" +
+                    $"Time is displayed in your local time zone ({TimeZoneInfo.Local.StandardName})";
+                return false;
+            }
+            else if (estStartTime.Date != estEndTime.Date)
+            {
+                addAppointmentFalseAlert.Visible = true;
+                addAppointmentFalseAlert.Text = $"Please select a time between 9:00 AM EST and 5:00 PM EST\n" +
+                    $"Time is displayed in your local time zone ({TimeZoneInfo.Local.StandardName})";
+                return false;
             }
             else
             {
-                alertLabel.Visible = false;
+                addAppointmentFalseAlert.Visible = false;
+                return true;
             }
-            btnSave.Enabled = this.EnableSave();
         }
 
         private void urlInput_TextChanged(object sender, EventArgs e)
@@ -227,9 +222,23 @@ namespace ScheduleingApp
         }
         private bool TryAddAppointment()
         {
+            
+            bool IsWeekday = startTimePicker.Value.DayOfWeek != DayOfWeek.Saturday && startTimePicker.Value.DayOfWeek != DayOfWeek.Sunday && endTimePicker.Value.DayOfWeek != DayOfWeek.Saturday && endTimePicker.Value.DayOfWeek != DayOfWeek.Sunday;
+                if (endTimePicker.Value < startTimePicker.Value) 
+                {
+                    return false;
+                }
+                if (!IsWeekday)
+                {
+                    return false;
+                }
+                if (ValidateTimeInput() == false)
+                {
+                    return false;
+                }
             foreach (Appointment app in dashboard.appointments)
-            {
-                if (startTimePicker.Value < app.End && endTimePicker.Value > app.Start)
+            { 
+                if(app.Start < TimeZoneInfo.ConvertTime(endTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc) && app.End > TimeZoneInfo.ConvertTime(startTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc))
                 {
                     return false;
                 }
@@ -262,7 +271,7 @@ namespace ScheduleingApp
         private void ModifyAppointment()
         {
             Customer selectedCustomer = customers.FirstOrDefault(c => c.CustomerId == Convert.ToInt32(customerComboBox.SelectedValue));
-            this.appointment.SetDetails(Convert.ToInt32(customerComboBox.SelectedValue), 1, titleInput.Text, descInput.Text, locationInput.Text, contactInput.Text, typeInput.Text, urlInput.Text, startTimePicker.Value, endTimePicker.Value, selectedCustomer, this.user);
+            this.appointment.SetDetails(Convert.ToInt32(customerComboBox.SelectedValue), 1, titleInput.Text, descInput.Text, locationInput.Text, contactInput.Text, typeInput.Text, urlInput.Text, DateTime.SpecifyKind(startTimePicker.Value, DateTimeKind.Local), DateTime.SpecifyKind(endTimePicker.Value, DateTimeKind.Local), selectedCustomer, this.user);
             bool complete = appointment.ModifyAppointmentInDatabase();
             if (complete)
             {
