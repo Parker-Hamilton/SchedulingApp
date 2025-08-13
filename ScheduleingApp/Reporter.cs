@@ -25,20 +25,22 @@ namespace ScheduleingApp
                     g => g.ToList()
                 );
 
-        public List<Appointment> MostCommonAppointments(List<Appointment> appointments)
+        public HashSet<(string Type, int Count)> MostCommonAppointments(List<Appointment> appointments)
         {
             var types = appointments
                 .GroupBy(a => a.Type)
                 .Select(g => new { Type = g.Key, Count = g.Count() })
                 .ToList();
+
             int maxCount = types.Max(g => g.Count);
+
             var mostCommonTypes = types
                 .Where(g => g.Count == maxCount)
-                .Select(g => g.Type)
+                .Select(g => (g.Type, g.Count))
                 .ToHashSet();
-            return appointments
-                .Where(a => mostCommonTypes.Contains(a.Type))
-                .ToList();
+
+            return mostCommonTypes;
+
         }
 
         public string GenerateReportText(List<Appointment> appointments)
@@ -64,8 +66,19 @@ namespace ScheduleingApp
             }
 
             var mostCommonAppointment = MostCommonAppointments(appointments);
-            report.AppendLine("\nMost Common Appointment Type:");
-            report.AppendLine($"  {mostCommonAppointment} ({mostCommonAppointment.Count})");
+            if (mostCommonAppointment.Count > 1)
+            {
+                report.AppendLine("\nMost Common Appointment Types (a tie occurred, all types that appear the most will be listed):");
+            }
+            else
+            {
+                report.AppendLine("\nMost Common Appointment Type:");
+            }
+            foreach (var app in mostCommonAppointment)
+            {
+                report.AppendLine($"	{app.Type} ({app.Count})");
+            }
+
 
             return report.ToString();
         }

@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -273,7 +274,7 @@ namespace ScheduleingApp
                 string fileName = "Appointment_Reports.txt";
                 string fullPath = Path.Combine(folderPath, fileName);
                 Directory.CreateDirectory(folderPath);
-                using (FileStream fs = new FileStream(fullPath, FileMode.Append, FileAccess.Write))
+                using (FileStream fs = new FileStream(fullPath, FileMode.Truncate, FileAccess.Write))
                 {
                     using (StreamWriter fileWriter = new StreamWriter(fs))
                     {

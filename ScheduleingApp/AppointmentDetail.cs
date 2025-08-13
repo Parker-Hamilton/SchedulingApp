@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,7 @@ namespace ScheduleingApp
     {
         public bool IsAddMode;
         public bool IsEditMode;
+        public int ModifyObjectID { get; set; }
         public Appointment appointment;
         public Dashboard dashboard;
         public BindingList<Customer> customers;
@@ -74,6 +76,7 @@ namespace ScheduleingApp
         }
         public void SetModifyDetails()
         {
+            this.ModifyObjectID = this.appointment.Id;
             titleInput.Text = this.appointment.Title;
             descInput.Text = this.appointment.Description;
             customerComboBox.SelectedValue = this.appointment.CustomerID;
@@ -83,14 +86,15 @@ namespace ScheduleingApp
             typeInput.Text = this.appointment.Type;
             locationInput.Text = this.appointment.Location;
             contactInput.Text = this.appointment.Contact;
+            this.EnableSave();
         }
         private bool EnableSave()
         {
             if ((titleInput.Text == string.Empty
-                || customerComboBox.Text == string.Empty
+                || customerComboBox.SelectedValue == string.Empty
                 || descInput.Text == string.Empty
-                || startTimePicker.Text == string.Empty
-                || endTimePicker.Text == string.Empty
+                || startTimePicker.Value.ToString() == string.Empty
+                || endTimePicker.Value.ToString() == string.Empty
                 || urlInput.Text == string.Empty
                 || typeInput.Text == string.Empty
                 || locationInput.Text == string.Empty
@@ -220,7 +224,7 @@ namespace ScheduleingApp
                 this.ModifyAppointment();
             }
         }
-        private bool TryAddAppointment()
+        private bool IsAppointmentValid()
         {
             
             bool IsWeekday = startTimePicker.Value.DayOfWeek != DayOfWeek.Saturday && startTimePicker.Value.DayOfWeek != DayOfWeek.Sunday && endTimePicker.Value.DayOfWeek != DayOfWeek.Saturday && endTimePicker.Value.DayOfWeek != DayOfWeek.Sunday;
@@ -236,18 +240,31 @@ namespace ScheduleingApp
                 {
                     return false;
                 }
-            foreach (Appointment app in dashboard.appointments)
-            { 
-                if(app.Start < TimeZoneInfo.ConvertTime(endTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc) && app.End > TimeZoneInfo.ConvertTime(startTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc))
+                if (IsAddMode)
                 {
-                    return false;
+                    foreach (Appointment app in dashboard.appointments)
+                    {
+                        if (app.Start < TimeZoneInfo.ConvertTime(endTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc) && app.End > TimeZoneInfo.ConvertTime(startTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc))
+                        {
+                            return false;
+                        }
+                    }
                 }
-            }
-            return true;
+                if (IsEditMode)
+                {
+                    foreach (Appointment app in dashboard.appointments)
+                    {
+                        if ((this.ModifyObjectID != app.Id) && app.Start < TimeZoneInfo.ConvertTime(endTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc) && app.End > TimeZoneInfo.ConvertTime(startTimePicker.Value, TimeZoneInfo.Local, TimeZoneInfo.Utc))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
         }
         private void AddAppointment()
         {
-            if (TryAddAppointment())
+            if (IsAppointmentValid())
             {
                 addAppointmentFalseAlert.Visible = true;
                 Appointment appointment = new Appointment();
@@ -270,14 +287,22 @@ namespace ScheduleingApp
         }
         private void ModifyAppointment()
         {
-            Customer selectedCustomer = customers.FirstOrDefault(c => c.CustomerId == Convert.ToInt32(customerComboBox.SelectedValue));
-            this.appointment.SetDetails(Convert.ToInt32(customerComboBox.SelectedValue), 1, titleInput.Text, descInput.Text, locationInput.Text, contactInput.Text, typeInput.Text, urlInput.Text, DateTime.SpecifyKind(startTimePicker.Value, DateTimeKind.Local), DateTime.SpecifyKind(endTimePicker.Value, DateTimeKind.Local), selectedCustomer, this.user);
-            bool complete = appointment.ModifyAppointmentInDatabase();
-            if (complete)
+            if (IsAppointmentValid())
             {
-                dashboard.UpdateDataSource();
-                this.Close();
-                dashboard.Show();
+                Customer selectedCustomer = customers.FirstOrDefault(c => c.CustomerId == Convert.ToInt32(customerComboBox.SelectedValue));
+                this.appointment.SetDetails(Convert.ToInt32(customerComboBox.SelectedValue), 1, titleInput.Text, descInput.Text, locationInput.Text, contactInput.Text, typeInput.Text, urlInput.Text, DateTime.SpecifyKind(startTimePicker.Value, DateTimeKind.Local), DateTime.SpecifyKind(endTimePicker.Value, DateTimeKind.Local), selectedCustomer, this.user);
+                bool complete = appointment.ModifyAppointmentInDatabase();
+                if (complete)
+                {
+                    dashboard.UpdateDataSource();
+                    this.Close();
+                    dashboard.Show();
+                }
+            }
+            else
+            {
+                addAppointmentFalseAlert.Text = $"This time is not available please select another time";
+                addAppointmentFalseAlert.Visible = true;
             }
         }
     }
